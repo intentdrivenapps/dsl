@@ -1,0 +1,128 @@
+Application: <name>
+Description: <description>
+
+Environment:
+- Region: <region>
+- Security Group: <security_group>
+- Load Balancer: <load_balancer>
+- CloudWatch Logs Group: <logs_group>
+
+Authentication:
+- Provider: <provider>
+- User Pool: <user_pool>
+- Client: <client>
+- Scopes:
+    - <resource>: <permissions>
+- SignUp:
+    - Methods:
+        - Email:
+            - Enabled: <true/false>
+            - Attributes:
+                - <attribute_name>: <data_type>
+        - Social Login:
+            - Enabled: <true/false>
+            - Providers:
+                - <provider>
+        - SAML SSO:
+            - Enabled: <true/false>
+            - IdP Metadata: <url>
+    - Verification:
+        - Email:
+            - Enabled: <true/false>
+            - Template: <template>
+            - Expiration: <expiration_time>
+        - SMS:
+            - Enabled: <true/false>
+            - Template: <template>
+            - Expiration: <expiration_time>
+    - Password Policy:
+        - Length: <length>
+        - Characters:
+            - Lowercase: <true/false>
+            - Uppercase: <true/false>
+            - Numbers: <true/false>
+            - Symbols: <true/false>
+    - Login:
+        - Methods:
+            - Email:
+                - Enabled: <true/false>
+            - OTP:
+                - Enabled: <true/false>
+                - Delivery:
+                    - SMS:
+                        - Enabled: <true/false>
+                        - Template: <template>
+                    - Email:
+                        - Enabled: <true/false>
+                        - Template: <template>
+            - Magic Links:
+                - Enabled: <true/false>
+                - Expiration: <expiration_time>
+            - Biometrics:
+                - Enabled: <true/false>
+            - PassKeys:
+                - Enabled: <true/false>
+    - Advanced:
+        - Device Fingerprinting:
+            - Enabled: <true/false>
+        - Bot Detection:
+            - Enabled: <true/false>
+        - Step-up Auth:
+            - Enabled: <true/false>
+            - Conditions:
+                - <condition>
+        - Secure Session Management:
+            - Enabled: <true/false>
+            - Expiration: <expiration_time>
+        - MFA Flows:
+            - Enabled: <true/false>
+            - Methods:
+                - SMS:
+                    - Enabled: <true/false>
+                    - Template: <template>
+                - TOTP:
+                    - Enabled: <true/false>
+                - U2F:
+                    - Enabled: <true/false>
+        - Account Takeover Protection:
+            - Enabled: <true/false>
+            - Threshold: <threshold>
+            - Actions:
+                - <action>
+
+Authorization:
+- Policies:
+    - <resource>:
+        - Type: <type>
+        - Definition: <definition>
+        - Data:
+            - <name>: <data>
+        - Targets:
+            - <target>:
+                - Attributes:
+                    - <attribute_name>: <data_type>
+        - Query:
+            - <query>
+        - Decision: <decision>
+        - Effect: <effect>
+        - Rules:
+            - <rule>:
+                - When: <when>
+                - Then: <then>
+
+Auditing:
+- Provider: <provider>
+- S3 Bucket: <bucket>
+- Include: <events>
+- Integrations:
+    - <integration>:
+        - Enabled: <true/false>
+        - Settings:
+            - <setting_name>: <value>
+
+Compliance:
+- Laws:
+    - <law>
+- Controls:
+    - <control>
+
