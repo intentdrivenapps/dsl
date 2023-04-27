@@ -1,0 +1,124 @@
+Application: Customer Success
+Description: An application that helps Customer Success teams manage their customer relationships and track customer health.
+
+Environment:
+- Region: us-east-1
+- Security Group: sg-1234567890abcdef
+- Load Balancer: lb-1234567890abcdef
+- CloudWatch Logs Group: /aws/lambda/customer-success
+
+Authentication:
+- Provider: Okta
+- User Pool: customer-success-users
+- Client: customer-success-app
+- Scopes:
+    - Salesforce: read
+    - Zendesk: read
+    - Hubspot: read
+    - Product: read
+    - Google Docs: read
+    - Google Presentation: read
+
+Authorization:
+- Policies:
+    - Salesforce:
+        - Type: OPA
+        - Definition: <OPA policy definition>
+        - Decision: allow
+    - Zendesk:
+        - Type: OPA
+        - Definition: <OPA policy definition>
+        - Decision: allow
+    - Hubspot:
+        - Type: OPA
+        - Definition: <OPA policy definition>
+        - Decision: allow
+    - Product:
+        - Type: OPA
+        - Definition: <OPA policy definition>
+        - Decision: allow
+    - Google Docs:
+        - Type: OPA
+        - Definition: <OPA policy definition>
+        - Decision: allow
+    - Google Presentation:
+        - Type: OPA
+        - Definition: <OPA policy definition>
+        - Decision: allow
+
+Data Sources:
+- Salesforce:
+    - Connection: <salesforce-connection-details>
+    - Objects:
+        - Leads:
+            - Fields:
+                - LeadScore: integer
+                - ExpectedCloseDate: date
+                - UseCases: string
+                - Stage: string
+                - NextSteps: string
+- Zendesk:
+    - Connection: <zendesk-connection-details>
+    - Objects:
+        - SupportCases:
+            - Fields:
+                - P1Issues: boolean
+- Hubspot:
+    - Connection: <hubspot-connection-details>
+    - Objects:
+        - MarketingEngagement:
+            - Fields:
+                - Visits: integer
+                - CollateralViews: integer
+- Product:
+    - Connection: <product-connection-details>
+    - Objects:
+        - ProductEngagement:
+            - Fields:
+                - FeatureUsage: string
+- Google Docs:
+    - Connection: <google-docs-connection-details>
+    - Objects:
+        - QBRDecks:
+            - Fields:
+                - LastUpdated: date
+                - URL: string
+- Google Presentation:
+    - Connection: <google-presentation-connection-details>
+    - Objects:
+        - QBRDocuments:
+            - Fields:
+                - LastUpdated: date
+                - URL: string
+
+Workflows:
+- CustomerHealth:
+    - Steps:
+        - FetchLeadInformation:
+            - DataSource: Salesforce
+            - Object: Leads
+            - Fields:
+                - LeadScore
+                - ExpectedCloseDate
+                - UseCases
+                - Stage
+                - NextSteps
+        - FetchSupportCases:
+            - DataSource: Zendesk
+            - Object: SupportCases
+            - Fields:
+                - P1Issues
+        - FetchNPS:
+            - DataSource: Hubspot
+            - Object: MarketingEngagement
+            - Fields:
+                - Visits
+                - CollateralViews
+        - FetchProductEngagement:
+            - DataSource: Product
+            - Object: ProductEngagement
+            - Fields:
+                - FeatureUsage
+        - FetchQBRDecks:
+            - DataSource: Google Docs
+            - Object:
